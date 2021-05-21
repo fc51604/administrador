@@ -31,7 +31,7 @@ Route::post('utilizadoresCreate','AdministradorController@createUtilizador');
 Route::get('utilizadoresAll','AdministradorController@allUtilizadores');
 Route::get('utilizadoresProfile/{username}','AdministradorController@utilizadorProfile');
 Route::get('utilizadoresFind','AdministradorController@findUtilizador');
-Route::put('utilizadoresUpdate/{username}','AdministradorController@updateUtilizador');
+Route::post('utilizadoresProfile/{username}','AdministradorController@updateUtilizador');
 Route::post('utilizadoresDelete/{username}','AdministradorController@deleteUtilizador');
 
 // Propriedades
@@ -40,5 +40,5 @@ Route::post('propriedadesCreate','AdministradorController@createPropriedade');
 Route::get('propriedadesAll','AdministradorController@allPropriedades');
 Route::get('propriedadesProfile/{idpropriedade}','AdministradorController@propriedadeProfile');
 Route::get('propriedadesFind','AdministradorController@findPropriedade');
-Route::put('propriedadesUpdate/{idpropriedade}','AdministradorController@updatePropriedade');
+Route::post('propriedadesProfile/{idpropriedade}','AdministradorController@updatePropriedade');
 Route::post('propriedadesDelete/{idpropriedade}','AdministradorController@deletePropriedade');

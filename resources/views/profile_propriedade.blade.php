@@ -23,7 +23,7 @@
 <body>
     <nav class="navbar fixed-top navbar-expand-lg navbar-dark p-md-3">
         <div class="container">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="{{ url('administradorHome') }}">
                 <img src="/img/logo/UniRent-V2.png" alt="" width="100">
             </a>
             <button class="navbar-toggler bg-dark" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -56,22 +56,25 @@
           <img class="m-3" src="img/logo/UniRent-V2.png" alt="" width="100">
                 </div>-->
                 <!-- Cartão do gajo-->
-                <div class="col-3 pt-2">
-                    <div style="margin:5%;margin-top:15%">
-                        @foreach ($data as $propriedade)
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="d-flex flex-column align-items-center text-center">
-                                    <div class="mt-3" style="padding-top:25%;padding-bottom:25%">
-                                        <h4>Property Id: {{ $propriedade['IdPropriedade'] }}</h4>
-                                        <h5>Landlord Id: {{ $propriedade['IdSenhorio'] }}</h5>
-                                    </div>
-                                </div>
+                <div class="col-3 pt-2" style="padding:2%;padding-bottom:0!important;padding-top:4%!important">
+                    <div class="single_advisor_profile wow fadeInUp" data-wow-delay="0.2s"
+                        style="visibility: visible; animation-delay: 0.2s; animation-name: fadeInUp; margin-bottom:6%;">
+                        <!-- Team Thumb-->
+                        <div class="advisor_thumb"><img src="/img/QUARTO.jpg" alt="img profile" style="height:18rem">
+                            <!-- Social Info-->
+                            <div class="social-info"><a href="#"><i class="fa fa-facebook"></i></a><a href="#"><i
+                                        class="fa fa-twitter"></i></a><a href="#"><i class="fa fa-linkedin"></i></a>
                             </div>
+                        </div>
+                        <!-- Team Details-->
+                        @foreach ($data as $propriedade)
+                        <div class="single_advisor_details_info">
+                            <h6>Property Id: {{ $propriedade['IdPropriedade'] }}</h6>
+                            <p class="designation">Landlord Id: {{ $propriedade['IdSenhorio'] }}</p>
                         </div>
                     </div>
                     <form action="/propriedadesDelete/{{ $propriedade['IdPropriedade'] }}" method="POST">
-                        <button type="submit" class="mt-3 btn btn-danger" id="deleteButton">Delete Property</button>
+                        <button type="submit" class="mt-3 btn btn-danger" id="deleteButton" style="float:left">Delete Property</button>
                     </form>
                 </div>
                 <div class="col-9" style="padding:2%">
@@ -85,87 +88,124 @@
                         <div class="col profile-container__information">
 
                             @foreach ($data as $propriedade)
-                            <input type="hidden" name="username" value="{{$propriedade['TipoPropriedade']}}">
+                            <form action="/propriedadesProfile/{{ $propriedade['IdPropriedade'] }}" method="POST">
+                            <input type="hidden" class="form-control mt-2" id="inputPassword" name="idpropriedade"
+                                        value="{{ $propriedade['IdPropriedade'] }}" style='background-color:#E7EBEE'>
+                            <input type="hidden" class="form-control mt-2" id="inputPassword" name="idsenhorio"
+                                        value="{{ $propriedade['IdSenhorio'] }}" style='background-color:#E7EBEE'>
+                            <input type="hidden" class="form-control mt-2" id="inputPassword" name="latitude"
+                                        value="{{ $propriedade['Latitude'] }}" style='background-color:#E7EBEE'>
+                            <input type="hidden" class="form-control mt-2" id="inputPassword" name="longitude"
+                                        value="{{ $propriedade['Longitude'] }}" style='background-color:#E7EBEE'>
                             <div class="form-group row" style="padding-left:10%">
                                 <div class="form-group col">
                                     <h2 class="pt-3">Property Type: </h2>
-                                    <div class="col-sm-3 ">
+                                    <div class="col-sm-8 ">
                                         <input type="text" class="form-control mt-2" id="inputPassword"
-                                            name="nomeUser" value="{{ $propriedade['TipoPropriedade'] }}" readonly>
+                                            name="type" value="{{ $propriedade['TipoPropriedade'] }}" style='background-color:#E7EBEE'>
                                     </div>
                                 </div>
                                 <div class="form-group col">
                                     <h2 class="pt-3">Location: </h2>
-                                    <div class="col-sm-4">
+                                    <div class="col-sm-8">
                                         <input type="text" class="form-control mt-2" id="inputPassword"
-                                            name="primeiroNome" value="{{ $propriedade['Localizacao'] }}" readonly>
+                                            name="location" value="{{ $propriedade['Localizacao'] }}" style='background-color:#E7EBEE'>
+                                    </div>
+                                </div>
+                                <div class="form-group col">
+                                    <h2 class="pt-3">Bathrooms:</h2>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control mt-2" id="inputPassword" name="bathrooms"
+                                        value="{{ $propriedade['CasasBanho'] }}" style='background-color:#E7EBEE'>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group row" style="padding-left:10%">
                                 <div class="form-group col">
                                     <h2 class="pt-3">Area:</h2>
-                                    <div class="col-sm-6">
-                                        <input type="text" class="form-control mt-2" id="inputPassword" name="mail"
-                                        value="{{ $propriedade['AreaMetros'] }}" readonly>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control mt-2" id="inputPassword" name="area"
+                                        value="{{ $propriedade['AreaMetros'] }}" style='background-color:#E7EBEE'>
                                     </div>
                                 </div>
                                 <div class="form-group col">
                                     <h2 class="pt-3">Price: </h2>
-                                    <div class="col-sm-4">
+                                    <div class="col-sm-8">
                                         <input type="text" class="form-control mt-2" id="inputPassword"
-                                            name="ultimoNome" value="{{ $propriedade['Preco'] }}" readonly>
+                                            name="price" value="{{ $propriedade['Preco'] }}" style='background-color:#E7EBEE'>
+                                    </div>
+                                </div>
+                                <div class="form-group col">
+                                    <h2 class="pt-3">Conservation State: </h2>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control mt-2" id="inputPassword" name="state"
+                                        value="{{ $propriedade['EstadoConservacao'] }}" style='background-color:#E7EBEE'>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group row" style="padding-left:10%">
                                 <div class="form-group col">
                                     <h2 class="pt-3">Description:</h2>
-                                    <div class="col-sm-6">
-                                        <input type="text" class="form-control mt-2" id="inputPassword" name="mail"
-                                        value="{{ $propriedade['Descricao'] }}" readonly>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control mt-2" id="inputPassword" name="description"
+                                        value="{{ $propriedade['Descricao'] }}" style='background-color:#E7EBEE'>
                                     </div>
                                 </div>
                                 <div class="form-group col">
-                                    <h2 class="pt-3">Room Number: </h2>
-                                    <div class="col-sm-4">
-                                        <input type="text" class="form-control mt-2" id="inputPassword" name="mail"
-                                        value="{{ $propriedade['NumeroQuartos'] }}" readonly>
+                                    <h2 class="pt-3">Rooms: </h2>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control mt-2" id="inputPassword" name="rooms"
+                                        value="{{ $propriedade['NumeroQuartos'] }}" style='background-color:#E7EBEE'>
+                                    </div>
+                                </div>
+                                <div class="form-group col">
+                                    <h2 class="pt-3">Solar Orientation: </h2>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control mt-2" id="inputPassword" name="orientation"
+                                        value="{{ $propriedade['OrientacaoSolar'] }}" style='background-color:#E7EBEE'>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group row" style="padding-left:10%">
                                 <div class="form-group col">
-                                    <h2 class="pt-3">Lotation:</h2>
-                                    <div class="col-sm-6">
-                                        <input type="text" class="form-control mt-2" id="inputPassword" name="mail"
-                                        value="{{ $propriedade['Lotacao'] }}" readonly>
+                                    <h2 class="pt-3">Capacity:</h2>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control mt-2" id="inputPassword" name="capacity"
+                                        value="{{ $propriedade['Lotacao'] }}" style='background-color:#E7EBEE'>
                                     </div>
                                 </div>
                                 <div class="form-group col">
                                     <h2 class="pt-3">Availability: </h2>
-                                    <div class="col-sm-4">
-                                        <input type="text" class="form-control mt-2" id="inputPassword" name="mail"
-                                        value="{{ $propriedade['Disponibilidade'] }}" readonly>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group row" style="padding-left:10%;padding-bottom:3%">
-                                <div class="form-group col">
-                                    <h2 class="pt-3">Bathrooms:</h2>
-                                    <div class="col-sm-6">
-                                        <input type="text" class="form-control mt-2" id="inputPassword" name="mail"
-                                        value="{{ $propriedade['CasasBanho'] }}" readonly>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control mt-2" id="inputPassword" name="availability"
+                                        value="{{ $propriedade['Disponibilidade'] }}" style='background-color:#E7EBEE'>
                                     </div>
                                 </div>
                                 <div class="form-group col">
-                                    <h2 class="pt-3">Conservation State: </h2>
-                                    <div class="col-sm-4">
-                                        <input type="text" class="form-control mt-2" id="inputPassword" name="mail"
-                                        value="{{ $propriedade['EstadoConservacao'] }}" readonly>
+                                    <h2 class="pt-3">Renting Time: </h2>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control mt-2" id="inputPassword" name="time"
+                                        value="{{ $propriedade['DuracaoAluguer'] }}" style='background-color:#E7EBEE'>
                                     </div>
                                 </div>
                             </div>
+                            <div class="form-group row" style="padding-left:10%">
+                                <div class="form-group col">
+                                    <div class="col-sm-8">
+                                    </div>
+                                </div>
+                                <div class="form-group col">
+                                    <div class="col-sm-8">
+                                    </div>
+                                </div>
+                                <div class="form-group col">
+                                    <div class="col-sm-8" style="padding-top:10%;padding-left:13%">
+                                        <button type="submit" class="mt-3 btn btn-primary ">Make Changes!</button>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                            </form>
                             @endforeach
                         </div>
                     </div>

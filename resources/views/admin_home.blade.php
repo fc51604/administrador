@@ -18,7 +18,7 @@
   <body>
     <nav class="navbar fixed-top navbar-expand-lg navbar-dark p-md-3">
       <div class="container">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="{{ url('administradorHome') }}">
           <img src="img/logo/UniRent-V2.png" alt="" width="100">
         </a>
       </div>

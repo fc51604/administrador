@@ -131,20 +131,22 @@ class AdministradorController extends Controller
     {
         $data = Utilizador::find($username);
 
-        $data->Username=$request->input('Username');
-        $data->Email=$request->input('Email');
-        $data->Password=$request->input('Password');
-        $data->PrimeiroNome=$request->input('PrimeiroNome');
-        $data->UltimoNome=$request->input('UltimoNome');
-        $data->Nacionalidade=$request->input('Nacionalidade');
-        $data->Nascimento=$request->input('Nascimento');
-        $data->Morada=$request->input('Morada');
-        $data->Telefone=$request->input('Telefone');
-        $data->TipoConta=$request->input('TipoConta');
-        $data->Saldo=$request->input('DuraSaldocaoAluguer');
+        $data->Username=$request->name;
+        $data->Email=$request->mail;
+        $data->Password=$request->password;
+        $data->PrimeiroNome=$request->first;
+        $data->UltimoNome=$request->last;
+        $data->Nacionalidade=$request->nationality;
+        $data->Nascimento=$request->birthday;
+        $data->Morada=$request->address;
+        $data->Telefone=$request->number;
+        $data->TipoConta=$request->type;
+        $data->Saldo=$request->balance;
         $data->save();
         
-        return response()->json('User updated successfully.');
+        $utilizador = Utilizador::where('Username','=' ,$data->Username)->get();
+        
+        return view('profile_interessado',['data'=>$utilizador]);
     }
 
     // Delete Utilizador
@@ -265,24 +267,26 @@ class AdministradorController extends Controller
     {
         $data = Propriedade::find($idpropriedade);
 
-        $data->IdPropriedade=$request->input('IdPropriedade');
-        $data->TipoPropriedade=$request->input('TipoPropriedade');
-        $data->Localizacao=$request->input('Localizacao');
-        $data->Latitude=$request->input('Latitude');
-        $data->Longitude=$request->input('Longitude');
-        $data->AreaMetros=$request->input('AreaMetros');
-        $data->Preco=$request->input('Preco');
-        $data->Descricao=$request->input('Descricao');
-        $data->OrientacaoSolar=$request->input('OrientacaoSolar');
-        $data->NumeroQuartos=$request->input('NumeroQuartos');
-        $data->DuracaoAluguer=$request->input('DuracaoAluguer');
-        $data->Lotacao=$request->input('Lotacao');
-        $data->Disponibilidade=$request->input('Disponibilidade');
-        $data->CasasBanho=$request->input('CasasBanho');
-        $data->EstadoConservacao=$request->input('EstadoConservacao');
+        $data->IdPropriedade=$request->idpropriedade;
+        $data->TipoPropriedade=$request->type;
+        $data->Localizacao=$request->location;
+        $data->Latitude=$request->latitude;
+        $data->Longitude=$request->longitude;
+        $data->AreaMetros=$request->area;
+        $data->Preco=$request->price;
+        $data->Descricao=$request->description;
+        $data->OrientacaoSolar=$request->orientation;
+        $data->NumeroQuartos=$request->rooms;
+        $data->DuracaoAluguer=$request->time;
+        $data->Lotacao=$request->capacity;
+        $data->Disponibilidade=$request->availability;
+        $data->CasasBanho=$request->bathrooms;
+        $data->EstadoConservacao=$request->state;
         $data->save();
+
+        $propriedade = Propriedade::where('IdPropriedade','=' ,$idpropriedade)->get();
         
-        return response()->json('Property updated successfully.');
+        return view('profile_propriedade',['data'=>$propriedade]);
     }
 
     // Delete Propriedade

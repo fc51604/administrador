@@ -23,7 +23,7 @@
 <body>
     <nav class="navbar fixed-top navbar-expand-lg navbar-dark p-md-3">
         <div class="container">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="{{ url('administradorHome') }}">
                 <img src="/img/logo/UniRent-V2.png" alt="" width="100">
             </a>
             <button class="navbar-toggler bg-dark" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -56,7 +56,7 @@
           <img class="m-3" src="img/logo/UniRent-V2.png" alt="" width="100">
                 </div>-->
                 <!-- Cartão do gajo-->
-                <div class="col-3 pt-2">
+                <div class="col-3 pt-2" style="padding:2%;padding-bottom:0!important;padding-top:2%!important">
                     <div class="single_advisor_profile wow fadeInUp" data-wow-delay="0.2s"
                         style="visibility: visible; animation-delay: 0.2s; animation-name: fadeInUp;">
                         <!-- Team Thumb-->
@@ -144,7 +144,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <button type="submit" class="mt-3 btn btn-primary ">Make Changes!</button>
+                                <button type="submit" class="mt-3 btn btn-primary">Make Changes!</button>
                             </form>
                             @endforeach
                         </div>

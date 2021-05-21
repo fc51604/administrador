@@ -23,7 +23,7 @@
 <body>
     <nav class="navbar fixed-top navbar-expand-lg navbar-dark p-md-3">
         <div class="container">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="{{ url('utilizadorHome') }}">
                 <img src="/img/logo/UniRent-V2.png" alt="" width="100">
             </a>
             <button class="navbar-toggler bg-dark" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -56,22 +56,25 @@
           <img class="m-3" src="img/logo/UniRent-V2.png" alt="" width="100">
                 </div>-->
                 <!-- Cartão do gajo-->
-                <div class="col-3 pt-2">
-                    <div style="margin:5%;margin-top:15%">
-                        @foreach ($data as $utilizador)
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="d-flex flex-column align-items-center text-center">
-                                    <div class="mt-3" style="padding-top:25%;padding-bottom:25%">
-                                        <h4>{{ $utilizador['PrimeiroNome'] }} {{ $utilizador['UltimoNome'] }}</h4>
-                                        <h5>{{ $utilizador['TipoConta'] }}</h5>
-                                    </div>
-                                </div>
+                <div class="col-3 pt-2" style="padding:2%;padding-bottom:0!important;padding-top:4%!important">
+                    <div class="single_advisor_profile wow fadeInUp" data-wow-delay="0.2s"
+                        style="visibility: visible; animation-delay: 0.2s; animation-name: fadeInUp; margin-bottom:4%;">
+                        <!-- Team Thumb-->
+                        <div class="advisor_thumb"><img src="/img/profile/default.jpg" alt="img profile" style="height:14rem;width:16rem">
+                            <!-- Social Info-->
+                            <div class="social-info"><a href="#"><i class="fa fa-facebook"></i></a><a href="#"><i
+                                        class="fa fa-twitter"></i></a><a href="#"><i class="fa fa-linkedin"></i></a>
                             </div>
+                        </div>
+                        <!-- Team Details-->
+                        @foreach ($data as $utilizador)
+                        <div class="single_advisor_details_info">
+                            <h6>{{ $utilizador['PrimeiroNome'] }} {{ $utilizador['UltimoNome'] }}</h6>
+                            <p class="designation">{{ $utilizador['TipoConta'] }}</p>
                         </div>
                     </div>
                     <form action="/utilizadoresDelete/{{ $utilizador['Username'] }}" method="POST">
-                        <button type="submit" class="mt-3 btn btn-danger" id="deleteButton">Delete User</button>
+                        <button type="submit" class="mt-3 btn btn-danger" id="deleteButton" style="float:left">Delete User</button>
                     </form>
                 </div>
                 <div class="col-9" style="padding:2%">
@@ -85,71 +88,98 @@
                         <div class="col profile-container__information">
 
                             @foreach ($data as $utilizador)
-                            <input type="hidden" name="username" value="{{$utilizador['Username']}}">
+                            <form action="/utilizadoresProfile/{{ $utilizador['Username'] }}" method="POST">
+                            <input type="hidden" class="form-control mt-2" id="inputPassword" name="password"
+                                        value="{{ $utilizador['Password'] }}" style='background-color:#E7EBEE'>
                             <div class="form-group row" style="padding-left:10%">
                                 <div class="form-group col">
                                     <h2 class="pt-3">Username: </h2>
-                                    <div class="col-sm-3 ">
+                                    <div class="col-sm-8 ">
                                         <input type="text" class="form-control mt-2" id="inputPassword"
-                                            name="nomeUser" value="{{ $utilizador['Username'] }}" readonly>
+                                            name="name" value="{{ $utilizador['Username'] }}" style='background-color:#E7EBEE'>
                                     </div>
                                 </div>
                                 <div class="form-group col">
                                     <h2 class="pt-3">First Name: </h2>
-                                    <div class="col-sm-4">
+                                    <div class="col-sm-8">
                                         <input type="text" class="form-control mt-2" id="inputPassword"
-                                            name="primeiroNome" value="{{ $utilizador['PrimeiroNome'] }}" readonly>
+                                            name="first" value="{{ $utilizador['PrimeiroNome'] }}" style='background-color:#E7EBEE'>
+                                    </div>
+                                </div>
+                                <div class="form-group col">
+                                    <h2 class="pt-3">Telephone: </h2>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control mt-2" id="inputPassword" name="number"
+                                        value="{{ $utilizador['Telefone'] }}" style='background-color:#E7EBEE'>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group row" style="padding-left:10%">
                                 <div class="form-group col">
                                     <h2 class="pt-3">Email:</h2>
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-8">
                                         <input type="text" class="form-control mt-2" id="inputPassword" name="mail"
-                                        value="{{ $utilizador['Email'] }}" readonly>
+                                        value="{{ $utilizador['Email'] }}" style='background-color:#E7EBEE'>
                                     </div>
                                 </div>
                                 <div class="form-group col">
                                     <h2 class="pt-3">Last Name: </h2>
-                                    <div class="col-sm-4">
+                                    <div class="col-sm-8">
                                         <input type="text" class="form-control mt-2" id="inputPassword"
-                                            name="ultimoNome" value="{{ $utilizador['UltimoNome'] }}" readonly>
+                                            name="last" value="{{ $utilizador['UltimoNome'] }}" style='background-color:#E7EBEE'>
+                                    </div>
+                                </div>
+                                <div class="form-group col">
+                                    <h2 class="pt-3">Address:</h2>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control mt-2" id="inputPassword" name="address"
+                                        value="{{ $utilizador['Morada'] }}" style='background-color:#E7EBEE'>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group row" style="padding-left:10%">
                                 <div class="form-group col">
                                     <h2 class="pt-3">Nationality:</h2>
-                                    <div class="col-sm-6">
-                                        <input type="text" class="form-control mt-2" id="inputPassword" name="mail"
-                                        value="{{ $utilizador['Nacionalidade'] }}" readonly>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control mt-2" id="inputPassword" name="nationality"
+                                        value="{{ $utilizador['Nacionalidade'] }}" style='background-color:#E7EBEE'>
                                     </div>
                                 </div>
                                 <div class="form-group col">
                                     <h2 class="pt-3">Birthday: </h2>
-                                    <div class="col-sm-4">
-                                        <input type="text" class="form-control mt-2" id="inputPassword" name="mail"
-                                        value="{{ $utilizador['Nascimento'] }}" readonly>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group row" style="padding-left:10%;padding-bottom:3%">
-                                <div class="form-group col">
-                                    <h2 class="pt-3">Address:</h2>
-                                    <div class="col-sm-6">
-                                        <input type="text" class="form-control mt-2" id="inputPassword" name="mail"
-                                        value="{{ $utilizador['Morada'] }}" readonly>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control mt-2" id="inputPassword" name="birthday"
+                                        value="{{ $utilizador['Nascimento'] }}" style='background-color:#E7EBEE'>
                                     </div>
                                 </div>
                                 <div class="form-group col">
-                                    <h2 class="pt-3">Telephone: </h2>
-                                    <div class="col-sm-4">
-                                        <input type="text" class="form-control mt-2" id="inputPassword" name="mail"
-                                        value="{{ $utilizador['Telefone'] }}" readonly>
+                                    <h2 class="pt-3">Account Type: </h2>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control mt-2" id="inputPassword" name="type"
+                                        value="{{ $utilizador['TipoConta'] }}" style='background-color:#E7EBEE'>
                                     </div>
                                 </div>
                             </div>
+                            <div class="form-group row" style="padding-left:10%">
+                                <div class="form-group col">
+                                    <h2 class="pt-3">Balance:</h2>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control mt-2" id="inputPassword" name="balance"
+                                        value="{{ $utilizador['Saldo'] }}" style='background-color:#E7EBEE'>
+                                    </div>
+                                </div>
+                                <div class="form-group col">
+                                    <div class="col-sm-8">
+                                    </div>
+                                </div>
+                                <div class="form-group col">
+                                    <div class="col-sm-8" style="padding-top:10%;padding-left:13%">
+                                        <button type="submit" class="mt-3 btn btn-primary">Make Changes!</button>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                            </form>
                             @endforeach
                         </div>
                     </div>
