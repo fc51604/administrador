@@ -9,10 +9,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Lumen\Auth\Authorizable;
 
-class Utilizador extends Model 
+class HistoricoSaldo extends Model 
 {
-    protected $table = 'Utilizadores';
-    protected $primaryKey = 'IdUser';
+    protected $table = 'HistoricoSaldo';
+    protected $primaryKey = 'IdSaldo';
     public $incrementing = false;
     public $timestamps = false;
 }

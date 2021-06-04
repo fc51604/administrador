@@ -42,6 +42,9 @@
                     <li class="nav-item">
                         <a class="nav-link text-black text-end" href="{{ url('propriedadesFind') }}">Properties</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-black text-end" href="{{ url('extrasMap') }}">Extras</a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -70,10 +73,10 @@
                         @foreach ($data as $utilizador)
                         <div class="single_advisor_details_info">
                             <h6>{{ $utilizador['PrimeiroNome'] }} {{ $utilizador['UltimoNome'] }}</h6>
-                            <p class="designation">{{ $utilizador['TipoConta'] }}</p>
+                            <p class="designation">User Id:{{ $utilizador['IdUser'] }}</p>
                         </div>
                     </div>
-                    <form action="/utilizadoresDelete/{{ $utilizador['Username'] }}" method="POST">
+                    <form action="/utilizadoresDelete/{{ $utilizador['IdUser'] }}" method="POST">
                         <button type="submit" class="mt-3 btn btn-danger" id="deleteButton" style="float:left">Delete User</button>
                     </form>
                 </div>
@@ -88,9 +91,11 @@
                         <div class="col profile-container__information">
 
                             @foreach ($data as $utilizador)
-                            <form action="/utilizadoresProfile/{{ $utilizador['Username'] }}" method="POST">
+                            <form action="/utilizadoresProfile/{{ $utilizador['IdUser'] }}" method="POST">
                             <input type="hidden" class="form-control mt-2" id="inputPassword" name="password"
                                         value="{{ $utilizador['Password'] }}" style='background-color:#E7EBEE'>
+                            <input type="hidden" class="form-control mt-2" id="inputPassword" name="iduser"
+                                        value="{{ $utilizador['IdUser'] }}" style='background-color:#E7EBEE'>
                             <div class="form-group row" style="padding-left:10%">
                                 <div class="form-group col">
                                     <h2 class="pt-3">Username: </h2>
@@ -169,7 +174,10 @@
                                     </div>
                                 </div>
                                 <div class="form-group col">
+                                    <h2 class="pt-3">NIF:</h2>
                                     <div class="col-sm-8">
+                                        <input type="text" class="form-control mt-2" id="inputPassword" name="nif"
+                                        value="{{ $utilizador['NIF'] }}" style='background-color:#E7EBEE'>
                                     </div>
                                 </div>
                                 <div class="form-group col">

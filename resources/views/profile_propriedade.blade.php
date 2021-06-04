@@ -42,6 +42,9 @@
                     <li class="nav-item">
                         <a class="nav-link text-black text-end" href="{{ url('propriedadesFind') }}">Properties</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-black text-end" href="{{ url('extrasMap') }}">Extras</a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -175,17 +178,63 @@
                                     </div>
                                 </div>
                                 <div class="form-group col">
-                                    <h2 class="pt-3">Availability: </h2>
+                                    <h2 class="pt-3">Internet Access: </h2>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control mt-2" id="inputPassword" name="availability"
-                                        value="{{ $propriedade['Disponibilidade'] }}" style='background-color:#E7EBEE'>
+                                        <input type="text" class="form-control mt-2" id="inputPassword" name="internet"
+                                        value="{{ $propriedade['internetAcess'] }}" style='background-color:#E7EBEE'>
                                     </div>
                                 </div>
                                 <div class="form-group col">
-                                    <h2 class="pt-3">Renting Time: </h2>
+                                    <h2 class="pt-3">Cleaning: </h2>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control mt-2" id="inputPassword" name="time"
-                                        value="{{ $propriedade['DuracaoAluguer'] }}" style='background-color:#E7EBEE'>
+                                        <input type="text" class="form-control mt-2" id="inputPassword" name="cleaning"
+                                        value="{{ $propriedade['limpeza'] }}" style='background-color:#E7EBEE'>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row" style="padding-left:10%">
+                                <div class="form-group col">
+                                    <h2 class="pt-3">Youngest Limit:</h2>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control mt-2" id="inputPassword" name="youngest"
+                                        value="{{ $propriedade['faixaEtariaMin'] }}" style='background-color:#E7EBEE'>
+                                    </div>
+                                </div>
+                                <div class="form-group col">
+                                    <h2 class="pt-3">Oldest Limit: </h2>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control mt-2" id="inputPassword" name="oldest"
+                                        value="{{ $propriedade['faixaEtariaMax'] }}" style='background-color:#E7EBEE'>
+                                    </div>
+                                </div>
+                                <div class="form-group col">
+                                    <h2 class="pt-3">Male: </h2>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control mt-2" id="inputPassword" name="male"
+                                        value="{{ $propriedade['generoMasc'] }}" style='background-color:#E7EBEE'>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row" style="padding-left:10%">
+                                <div class="form-group col">
+                                    <h2 class="pt-3">Female:</h2>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control mt-2" id="inputPassword" name="female"
+                                        value="{{ $propriedade['generoFemin'] }}" style='background-color:#E7EBEE'>
+                                    </div>
+                                </div>
+                                <div class="form-group col">
+                                    <h2 class="pt-3">Smokers: </h2>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control mt-2" id="inputPassword" name="smokers"
+                                        value="{{ $propriedade['aceitaFumadores'] }}" style='background-color:#E7EBEE'>
+                                    </div>
+                                </div>
+                                <div class="form-group col">
+                                    <h2 class="pt-3">Pets: </h2>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control mt-2" id="inputPassword" name="pets"
+                                        value="{{ $propriedade['aceitaAnimais'] }}" style='background-color:#E7EBEE'>
                                     </div>
                                 </div>
                             </div>

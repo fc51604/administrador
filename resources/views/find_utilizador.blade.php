@@ -50,6 +50,9 @@
                     <li class="nav-item">
                         <a class="nav-link text-black text-end" href="{{ url('propriedadesFind') }}">Properties</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-black text-end" href="{{ url('extrasMap') }}">Extras</a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -91,6 +94,15 @@
                                     <div class="col text-center mt-5 p-2">
                                         <button type="submit" class="btn btn-primary wrn-btn table-btn">Search</button>
                                     </div>
+                                    <div class="col text-center mt-5 p-2">
+                                        <span data-href="exportUsers" id="exportUsers" class="btn btn-success btn-sm" onclick="exportUsers(event.target);">Export</span>
+                                        <script>
+                                            function exportUsers(_this) {
+                                                let _url = $(_this).data('href');
+                                                window.location.href = _url;
+                                            }
+                                        </script>
+                                    </div>
                                 </div>
                             </form>
                             <!-- Fim Search Form -->
@@ -119,9 +131,9 @@
                                                             <td id="table-rows">{{$row['UltimoNome']}}</td>
                                                             <td id="table-rows">{{$row['TipoConta']}}</td>
                                                             <td class="text-right buttons-properties">
-                                                                <form action="/utilizadoresDelete/{{ $row['Username'] }}" method="POST">
-                                                                    <a class="mt-2 btn btn-primary" id="button-view" href="{{ url('utilizadoresProfile/'.$row['Username']) }}" style="margin-top:8%!important">View User</a>
-                                                                    <button type="submit" class="mt-2 btn btn-danger" id="deleteButton" style=margin-top:8%!important;float:right;">X</button>
+                                                                <form action="/utilizadoresDelete/{{ $row['IdUser'] }}" method="POST">
+                                                                    <a class="mt-2 btn btn-primary" id="button-view" href="{{ url('utilizadoresProfile/'.$row['IdUser']) }}" style="margin-top:8%!important">View User</a>
+                                                                    <button type="submit" class="mt-2 btn btn-danger" id="deleteButton" style=margin-top:8%!important;float:right;>X</button>
                                                                 </form>			
                                                             </td>
                                                         </tr>

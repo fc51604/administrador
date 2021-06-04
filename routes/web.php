@@ -29,10 +29,11 @@ Route::delete('administradorDelete/{username}','AdministradorController@deleteAd
 
 Route::post('utilizadoresCreate','AdministradorController@createUtilizador');
 Route::get('utilizadoresAll','AdministradorController@allUtilizadores');
-Route::get('utilizadoresProfile/{username}','AdministradorController@utilizadorProfile');
+Route::get('utilizadoresProfile/{iduser}','AdministradorController@utilizadorProfile');
 Route::get('utilizadoresFind','AdministradorController@findUtilizador');
-Route::post('utilizadoresProfile/{username}','AdministradorController@updateUtilizador');
-Route::post('utilizadoresDelete/{username}','AdministradorController@deleteUtilizador');
+Route::post('utilizadoresProfile/{iduser}','AdministradorController@updateUtilizador');
+Route::post('utilizadoresDelete/{iduser}','AdministradorController@deleteUtilizador');
+Route::get('exportUsers','AdministradorController@exportUsers');
 
 // Propriedades
 
@@ -42,3 +43,9 @@ Route::get('propriedadesProfile/{idpropriedade}','AdministradorController@propri
 Route::get('propriedadesFind','AdministradorController@findPropriedade');
 Route::post('propriedadesProfile/{idpropriedade}','AdministradorController@updatePropriedade');
 Route::post('propriedadesDelete/{idpropriedade}','AdministradorController@deletePropriedade');
+Route::get('exportProperties','AdministradorController@exportProperties');
+
+// Extras
+
+Route::get('extrasMap','AdministradorController@addExtras');
+Route::post('createExtra','AdministradorController@createExtra');

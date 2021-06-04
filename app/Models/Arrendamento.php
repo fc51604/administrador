@@ -9,10 +9,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Lumen\Auth\Authorizable;
 
-class Utilizador extends Model 
+class Arrendamento extends Model 
 {
-    protected $table = 'Utilizadores';
-    protected $primaryKey = 'IdUser';
+    protected $table = 'Arrendamento';
+    protected $primaryKey = 'IdArrendamento';
     public $incrementing = false;
     public $timestamps = false;
 }

@@ -50,6 +50,9 @@
                     <li class="nav-item">
                         <a class="nav-link text-black text-end" href="{{ url('propriedadesFind') }}">Properties</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-black text-end" href="{{ url('extrasMap') }}">Extras</a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -108,6 +111,15 @@
                                     </div>
                                     <div class="col text-center mt-5 p-2">
                                         <button type="submit" class="btn btn-primary wrn-btn table-btn">Search</button>
+                                    </div>
+                                    <div class="col text-center mt-5 p-2">
+                                        <span data-href="exportProperties" id="exportProperties" class="btn btn-success btn-sm" onclick="exportProperties(event.target);">Export</span>
+                                        <script>
+                                            function exportProperties(_this) {
+                                                let _url = $(_this).data('href');
+                                                window.location.href = _url;
+                                            }
+                                        </script>
                                     </div>
                                 </div>
                             </form>

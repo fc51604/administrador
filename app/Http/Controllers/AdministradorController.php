@@ -8,6 +8,15 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 use App\Models\Administrador;
 use App\Models\Propriedade;
+use App\Models\FotosPropriedades;
+use App\Models\HistoricoSaldo;
+use App\Models\Restricoes;
+use App\Models\Ratings;
+use App\Models\Pagamentos;
+use App\Models\Likes;
+use App\Models\Indisponivel;
+use App\Models\Arrendamento;
+use App\Models\Extras;
 use App\Models\Utilizador;
 use App\Models\Interessado;
 use App\Models\Senhorio;
@@ -18,7 +27,9 @@ use Illuminate\Http\Request;
 
 class AdministradorController extends Controller
 {
+
     // ###################################################### Administradores ######################################################
+
 
     // Show Administrador Home Page
 
@@ -62,7 +73,7 @@ class AdministradorController extends Controller
 
     public function updateAdministrador(Request $request)
     {
-        $data = Administrador::find("unirent_admin");
+        $data = Administrador::find("admin");
 
         $data->Email=$request->mail;
         $data->PrimeiroNome=$request->primeiroNome;
@@ -70,7 +81,7 @@ class AdministradorController extends Controller
         $data->Password=$request->password;
         $data->save();
         
-        $administrador = Administrador::where('username','=' ,'unirent_admin')->get();
+        $administrador = Administrador::where('username','=' ,'admin')->get();
 
         return view('profile_admin',['data'=>$administrador]);
     }
@@ -85,7 +96,9 @@ class AdministradorController extends Controller
         return response()->json('Admin removed successfully.');
     }
 
+
     // ###################################################### Utilizadores ######################################################
+
 
     // Create Utilizador
 
@@ -118,19 +131,20 @@ class AdministradorController extends Controller
 
     // Show Utilizador by Username
 
-    public function utilizadorProfile($username)
+    public function utilizadorProfile($iduser)
     {
-        $utilizador = Utilizador::where('username','=' ,$username)->get();
+        $utilizador = Utilizador::where('IdUser','=' ,$iduser)->get();
 
         return view('profile_interessado',['data'=>$utilizador]);
     }
 
     // Update Utilizador
 
-    public function updateUtilizador(Request $request, $username)
+    public function updateUtilizador(Request $request, $iduser)
     {
-        $data = Utilizador::find($username);
+        $data = Utilizador::find($iduser);
 
+        $data->IdUser=$request->iduser;
         $data->Username=$request->name;
         $data->Email=$request->mail;
         $data->Password=$request->password;
@@ -142,41 +156,62 @@ class AdministradorController extends Controller
         $data->Telefone=$request->number;
         $data->TipoConta=$request->type;
         $data->Saldo=$request->balance;
+        $data->NIF=$request->nif;
         $data->save();
         
-        $utilizador = Utilizador::where('Username','=' ,$data->Username)->get();
+        $utilizador = Utilizador::where('IdUser','=' ,$data->IdUser)->get();
         
         return view('profile_interessado',['data'=>$utilizador]);
     }
 
     // Delete Utilizador
 
-    public function deleteUtilizador($username)
+    public function deleteUtilizador($iduser)
     {
-        $utilizador = Utilizador::find($username);
+        $utilizador = Utilizador::find($iduser);
 
         if ($utilizador->TipoConta == "Senhorio") {
-            $senhorio = Senhorio::where('Username', $utilizador->Username);
-            $senhorioId = Senhorio::where('Username', $utilizador->Username)->value('IdSenhorio');
+            $senhorio = Senhorio::where('IdUser', $utilizador->IdUser);
+            $senhorioId = Senhorio::where('IdUser', $utilizador->IdUser)->value('IdSenhorio');
+            $historicos = HistoricoSaldo::where('IdUser', $iduser)->get();
             $propriedades = Propriedade::where('IdSenhorio', $senhorioId)->get();
-            if ($propriedades != "") {
+            if ($historicos != '[]') {
+                foreach ($historicos as $historico) {
+                    $historico->delete();
+                }
+            }
+            if ($propriedades != '[]') {
                 foreach ($propriedades as $propriedade) {
-                    $inquilinos = Inquilino::where('IdPropriedade', $propriedade['IdPropriedade']);
-                    if ($inquilinos != "") {
-
-                        $inquilinos->delete();
-                    }
-                    $propriedade->delete();
+                    AdministradorController::deletePropriedade($propriedade->IdPropriedade);
                 }
             }
             $senhorio->delete();
 
         } else if ($utilizador->TipoConta == "Interessado") {
-            $interessado = Interessado::where('Username', $utilizador->Username);
+            $interessado = Interessado::where('IdUser', $utilizador->IdUser);
+            $historicos = HistoricoSaldo::where('IdUser', $iduser)->get();
+            if ($historicos != '[]') {
+                foreach ($historicos as $historico) {
+                    $historico->delete();
+                }
+            }
             $interessado->delete();
         
         } else if ($utilizador->TipoConta == "Inquilino") {
-            $inquilino = Inquilino::where('Username', $utilizador->Username);
+            $inquilino = Inquilino::where('IdUser', $utilizador->IdUser);
+            $idinquilino = Inquilino::where('IdUser', $utilizador->IdUser)->value('IdInquilino');
+            $arrendamentos = Arrendamento::where('IdInquilino', $idinquilino)->get();
+            $historicos = HistoricoSaldo::where('IdUser', $iduser)->get();
+            if ($arrendamentos != '[]') {
+                foreach ($arrendamentos as $arrendamento) {
+                    $arrendamento->delete();
+                }
+            }
+            if ($historicos != '[]') {
+                foreach ($historicos as $historico) {
+                    $historico->delete();
+                }
+            }
             $inquilino->delete();
         }
 
@@ -217,32 +252,81 @@ class AdministradorController extends Controller
         return view('find_utilizador',compact('utilizadores'));
     }
 
+    // Export Users
+
+    public function exportUsers(Request $request)
+    {
+        $fileName = 'users.csv';
+        $utilizadores = Utilizador::all();
+
+        $headers = array(
+            "Content-type"        => "text/csv",
+            "Content-Disposition" => "attachment; filename=$fileName",
+            "Pragma"              => "no-cache",
+            "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+            "Expires"             => "0"
+        );
+
+        $columns = array('IdUser', 'Username', 'Email', 'Password', 'PrimeiroNome', 'UltimoNome', 'Nacionalidade', 'Nascimento', 'Morada', 'Telefone', 'TipoConta', 'Saldo', 'Imagem', 'ApiToken', 'NIF');
+
+        $callback = function() use($utilizadores, $columns) {
+            $file = fopen('php://output', 'w');
+            fputcsv($file, $columns);
+
+            foreach ($utilizadores as $utilizador) {
+                $row['IdUser'] = $utilizador->IdUser;
+                $row['Username'] = $utilizador->Username;
+                $row['Email'] = $utilizador->Email;
+                $row['Password'] = $utilizador->Password;
+                $row['PrimeiroNome'] = $utilizador->PrimeiroNome;
+                $row['UltimoNome'] = $utilizador->UltimoNome;
+                $row['Nacionalidade'] = $utilizador->Nacionalidade;
+                $row['Nascimento'] = $utilizador->Nascimento;
+                $row['Morada'] = $utilizador->Morada;
+                $row['Telefone'] = $utilizador->Telefone;
+                $row['TipoConta'] = $utilizador->TipoConta;
+                $row['Saldo'] = $utilizador->Saldo;
+                $row['Imagem'] = $utilizador->imagem;
+                $row['ApiToken'] = $utilizador->api_token;
+                $row['NIF'] = $utilizador->NIF;
+
+                fputcsv($file, array($row['IdUser'], $row['Username'], $row['Email'], $row['Password'], $row['PrimeiroNome'], $row['UltimoNome'], $row['Nacionalidade'], $row['Nascimento'], $row['Morada'], $row['Telefone'], $row['TipoConta'], $row['Saldo'], $row['Imagem'], $row['ApiToken'], $row['NIF']));
+            }
+
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
+    }
+
+
     // ###################################################### Propriedades ######################################################
 
-     // Create Propriedade
 
-     public function createPropriedade(Request $request)
-     {
-         print_r($request->input());
-         $order = new Propriedade;
-         $order->IdPropriedade=$request->IdPropriedade;
-         $order->TipoPropriedade=$request->TipoPropriedade;
-         $order->Localizacao=$request->Localizacao;
-         $order->Latitude=$request->Latitude;
-         $order->Longitude=$request->Longitude;
-         $order->AreaMetros=$request->AreaMetros;
-         $order->Preco=$request->Preco;
-         $order->Descricao=$request->Descricao;
-         $order->OrientacaoSolar=$request->OrientacaoSolar;
-         $order->NumeroQuartos=$request->NumeroQuartos;
-         $order->DuracaoAluguer=$request->DuracaoAluguer;
-         $order->Lotacao=$request->Lotacao;
-         $order->Disponibilidade=$request->Disponibilidade;
-         $order->CasasBanho=$request->CasasBanho;
-         $order->EstadoConservacao=$request->EstadoConservacao;
- 
-         $result = $order->save();
-     }
+    // Create Propriedade
+
+    public function createPropriedade(Request $request)
+    {
+        print_r($request->input());
+        $order = new Propriedade;
+        $order->IdPropriedade=$request->IdPropriedade;
+        $order->TipoPropriedade=$request->TipoPropriedade;
+        $order->Localizacao=$request->Localizacao;
+        $order->Latitude=$request->Latitude;
+        $order->Longitude=$request->Longitude;
+        $order->AreaMetros=$request->AreaMetros;
+        $order->Preco=$request->Preco;
+        $order->Descricao=$request->Descricao;
+        $order->OrientacaoSolar=$request->OrientacaoSolar;
+        $order->NumeroQuartos=$request->NumeroQuartos;
+        $order->DuracaoAluguer=$request->DuracaoAluguer;
+        $order->Lotacao=$request->Lotacao;
+        $order->Disponibilidade=$request->Disponibilidade;
+        $order->CasasBanho=$request->CasasBanho;
+        $order->EstadoConservacao=$request->EstadoConservacao;
+
+        $result = $order->save();
+    }
     
     // List Propriedades
 
@@ -277,11 +361,17 @@ class AdministradorController extends Controller
         $data->Descricao=$request->description;
         $data->OrientacaoSolar=$request->orientation;
         $data->NumeroQuartos=$request->rooms;
-        $data->DuracaoAluguer=$request->time;
         $data->Lotacao=$request->capacity;
-        $data->Disponibilidade=$request->availability;
         $data->CasasBanho=$request->bathrooms;
         $data->EstadoConservacao=$request->state;
+        $data->internetAcess=$request->internet;
+        $data->limpeza=$request->cleaning;
+        $data->faixaEtariaMin=$request->youngest;
+        $data->faixaEtariaMax=$request->oldest;
+        $data->generoMasc=$request->male;
+        $data->generoFemin=$request->female;
+        $data->aceitaFumadores=$request->smokers;
+        $data->aceitaAnimais=$request->pets;
         $data->save();
 
         $propriedade = Propriedade::where('IdPropriedade','=' ,$idpropriedade)->get();
@@ -294,9 +384,67 @@ class AdministradorController extends Controller
     public function deletePropriedade($idpropriedade)
     {
         $propriedade = Propriedade::find($idpropriedade);
-        $inquilinos = Inquilino::where('IdPropriedade', $idpropriedade);
-        if ($inquilinos != "") {
-            $inquilinos->delete();
+        $arrendamentos = Arrendamento::where('IdPropriedade', $idpropriedade)->get();
+        $extras = Extras::where('IdPropriedade', $idpropriedade)->get();
+        $fotos = FotosPropriedades::where('IdPropriedade', $idpropriedade)->get();
+        $indisponiveis = Indisponivel::where('IdPropriedade', $idpropriedade)->get();
+        $inquilinos = Inquilino::where('IdPropriedade', $idpropriedade)->get();
+        $restricoes = Restricoes::where('IdPropriedade', $idpropriedade)->get();
+        $ratings = Ratings::where('IdPropriedade', $idpropriedade)->get();
+        // $pagamentos = Pagamentos::where('IdPropriedade', $idpropriedade)->get();
+        $likes = Likes::where('IdPropriedade', $idpropriedade)->get();
+
+        if ($arrendamentos != '[]') {
+            foreach ($arrendamentos as $arrendamento) {
+                $idarrendamento = Arrendamento::where('IdPropriedade', $idpropriedade)->value('IdArrendamento');
+                $pagamentos = Pagamentos::where('IdArrendamento', $idarrendamento)->get();
+                if ($pagamentos != '[]') {
+                    foreach ($pagamentos as $pagamento) {
+                        $pagamento->delete();
+                    }
+                }
+                $arrendamento->delete();
+            }
+        }
+        if ($extras != '[]') {
+            foreach ($extras as $extra) {
+                $extra->delete();
+            }
+        }
+        if ($fotos != '[]') {
+            foreach ($fotos as $foto) {
+                $foto->delete();
+            }
+        }
+        if ($indisponiveis != '[]') {
+            foreach ($indisponiveis as $indisponivel) {
+                $indisponivel->delete();
+            }
+        }
+        if ($inquilinos != '[]') {
+            foreach ($inquilinos as $inquilino) {
+                $inquilino->delete();
+            }
+        }
+        if ($restricoes != '[]') {
+            foreach ($restricoes as $restricao) {
+                $restricao->delete();
+            }
+        }
+        if ($ratings != '[]') {
+            foreach ($ratings as $rating) {
+                $rating->delete();
+            }
+        }
+        // if ($pagamentos != '[]') {
+        //     foreach ($pagamentos as $pagamento) {
+        //         $pagamento->delete();
+        //     }
+        // }
+        if ($likes != '[]') {
+            foreach ($likes as $like) {
+                $like->delete();
+            }
         }
 
         $propriedade->delete();
@@ -379,6 +527,87 @@ class AdministradorController extends Controller
 
         return view('find_propriedade',compact('propriedades'));
     }
+
+    // Export Users
+
+    public function exportProperties(Request $request)
+    {
+        $fileName = 'properties.csv';
+        $propriedades = Propriedade::all();
+
+        $headers = array(
+            "Content-type"        => "text/csv",
+            "Content-Disposition" => "attachment; filename=$fileName",
+            "Pragma"              => "no-cache",
+            "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+            "Expires"             => "0"
+        );
+
+        $columns = array('IdPropriedade', 'IdSenhorio', 'TipoPropriedade', 'Localizacao', 'Latitude', 'Longitude', 'AreaMetros', 'Preco', 'Descricao', 'OrientacaoSolar', 'NumeroQuartos', 'Lotacao', 'CasasBanho', 'EstadoConservacao', 'InternetAccess', 'Limpeza', 'faixaEtariaMin', 'faixaEtariaMax', 'generoMasc', 'generoFemin', 'aceitaFumadores', 'aceitaAnimais');
+
+        $callback = function() use($propriedades, $columns) {
+            $file = fopen('php://output', 'w');
+            fputcsv($file, $columns);
+
+            foreach ($propriedades as $propriedade) {
+                $row['IdPropriedade'] = $propriedade->IdPropriedade;
+                $row['IdSenhorio'] = $propriedade->IdSenhorio;
+                $row['TipoPropriedade'] = $propriedade->TipoPropriedade;
+                $row['Localizacao'] = $propriedade->Localizacao;
+                $row['Latitude'] = $propriedade->Latitude;
+                $row['Longitude'] = $propriedade->Longitude;
+                $row['AreaMetros'] = $propriedade->AreaMetros;
+                $row['Preco'] = $propriedade->Preco;
+                $row['Descricao'] = $propriedade->Descricao;
+                $row['OrientacaoSolar'] = $propriedade->OrientacaoSolar;
+                $row['NumeroQuartos'] = $propriedade->NumeroQuartos;
+                $row['Lotacao'] = $propriedade->Lotacao;
+                $row['CasasBanho'] = $propriedade->CasasBanho;
+                $row['EstadoConservacao'] = $propriedade->EstadoConservacao;
+                $row['InternetAccess'] = $propriedade->internetAcess;
+                $row['Limpeza'] = $propriedade->limpeza;
+                $row['faixaEtariaMin'] = $propriedade->faixaEtariaMin;
+                $row['faixaEtariaMax'] = $propriedade->faixaEtariaMax;
+                $row['generoMasc'] = $propriedade->generoMasc;
+                $row['generoFemin'] = $propriedade->generoFemin;
+                $row['aceitaFumadores'] = $propriedade->aceitaFumadores;
+                $row['aceitaAnimais'] = $propriedade->aceitaAnimais;
+
+                fputcsv($file, array($row['IdPropriedade'], $row['IdSenhorio'], $row['TipoPropriedade'], $row['Localizacao'], $row['Latitude'], $row['Longitude'], $row['AreaMetros'], $row['Preco'], $row['Descricao'], $row['OrientacaoSolar'], $row['NumeroQuartos'], $row['Lotacao'], $row['CasasBanho'], $row['EstadoConservacao'], $row['InternetAccess'], $row['Limpeza'], $row['faixaEtariaMin'], $row['faixaEtariaMax'], $row['generoMasc'], $row['generoFemin'], $row['aceitaFumadores'], $row['aceitaAnimais']));
+            }
+
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
+    }
+
+
+    // ###################################################### Extras ######################################################
+
+
+    // Show Extras Map
+
+    public function addExtras()
+    {
+        return view('add_extras');
+    }
+
+    // Create Extra
+
+    public function createExtra(Request $request)
+    {
+        $request->input();
+        $order = new Extra;
+        $order->Nome=$request->Nome;
+        $order->Tipo=$request->Tipo;
+        $order->Latitude=$request->Latitude;
+        $order->Longitude=$request->Longitude;
+        $order->Descricao=$request->Descricao;
+
+        $result = $order->save();
+    }
+     
 }
 
 

@@ -36,7 +36,7 @@
             <div class="row-2">
               <div class="col-2">
                 <h1 class="pt-3 profile-container__welcomeUser">Welcome,</h1>
-                <h1 class="pb-3 profile-container__nameUser" id="nameUser">unirent_admin</h1>
+                <h1 class="pb-3 profile-container__nameUser" id="nameUser">admin</h1>
               </div>
             </div>
             <div class="row">
@@ -58,6 +58,14 @@
             <div class="row">
                 <div class="d-grid col-12 ms-auto">
                   <a class="btn btn-primary btn-lg" id="button-view" href="{{ url('propriedadesFind') }}">Properties</a>
+                </div>
+            </div>
+            <div class="row">
+              <p>  </p>
+            </div>
+            <div class="row">
+                <div class="d-grid col-12 ms-auto">
+                  <a class="btn btn-primary btn-lg" id="button-view" href="{{ url('extrasMap') }}">Extras</a>
                 </div>
             </div>
           </div>
