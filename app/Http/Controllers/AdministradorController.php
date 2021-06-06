@@ -13,6 +13,7 @@ use App\Models\HistoricoSaldo;
 use App\Models\Restricoes;
 use App\Models\Ratings;
 use App\Models\Pagamentos;
+use App\Models\Local;
 use App\Models\Likes;
 use App\Models\Indisponivel;
 use App\Models\Arrendamento;
@@ -299,6 +300,64 @@ class AdministradorController extends Controller
         return response()->stream($callback, 200, $headers);
     }
 
+    // Import Users
+
+    function csvToArray($filename = '', $delimiter = ',')
+    {
+        if (!file_exists($filename) || !is_readable($filename))
+        echo 'less not go';
+            return false;
+
+        $header = null;
+        $data = array();
+        if (($handle = fopen($filename, 'r')) !== false)
+        {
+            while (($row = fgetcsv($handle, 1000, $delimiter)) !== false)
+            {
+                if (!$header)
+                    $header = $row;
+                else
+                    $data[] = array_combine($header, $row);
+            }
+            fclose($handle);
+        }
+        echo 'less go';
+        return $data;
+    }
+
+    public function importUsers()
+    {
+        if (!function_exists('public_path')) {
+            /**
+             * Return the path to public dir
+             *
+             * @param null $path
+             *
+             * @return string
+             */
+            function public_path($path = null)
+            {
+                return rtrim(app()->basePath('public/' . $path), '/');
+            }
+        }
+
+        $file = public_path('/files/newUsers.csv');
+
+        $newUsers = $this->csvToArray($file);
+
+        echo $newUsers;
+
+        echo 'yo';
+
+        for ($i = 0; $i < count($newUsers); $i ++)
+        {
+            Utilizador::firstOrCreate($newUsers[$i]);
+        }
+
+        return redirect('utilizadoresFind');  
+    }
+
+
 
     // ###################################################### Propriedades ######################################################
 
@@ -583,29 +642,35 @@ class AdministradorController extends Controller
     }
 
 
-    // ###################################################### Extras ######################################################
+    // ###################################################### Establishments ######################################################
 
 
-    // Show Extras Map
+    // Show Establishments
 
-    public function addExtras()
+    public function establishments()
     {
-        return view('add_extras');
+        return view('establishments');
     }
 
-    // Create Extra
+    // Create Establishment 
 
-    public function createExtra(Request $request)
+    public function createEstablishment(Request $request)
     {
+        $tipo = $request->input('type');
+        if ($tipo == "") {
+            return redirect('establishments');  
+        }
         $request->input();
-        $order = new Extra;
-        $order->Nome=$request->Nome;
-        $order->Tipo=$request->Tipo;
-        $order->Latitude=$request->Latitude;
-        $order->Longitude=$request->Longitude;
-        $order->Descricao=$request->Descricao;
+        $order = new Local;
+        $order->Tipo=$request->type;
+        $order->Nome=$request->name;
+        $order->Descricao=$request->description;
+        $order->Latitude=$request->latitude;
+        $order->Longitude=$request->longitude;
 
         $result = $order->save();
+
+        return redirect('establishments');  
     }
      
 }

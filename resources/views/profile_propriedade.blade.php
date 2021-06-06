@@ -43,7 +43,7 @@
                         <a class="nav-link text-black text-end" href="{{ url('propriedadesFind') }}">Properties</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-black text-end" href="{{ url('extrasMap') }}">Extras</a>
+                        <a class="nav-link text-black text-end" href="{{ url('establishments') }}">Establishments</a>
                     </li>
                 </ul>
             </div>

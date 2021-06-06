@@ -51,7 +51,7 @@
                         <a class="nav-link text-black text-end" href="{{ url('propriedadesFind') }}">Properties</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-black text-end" href="{{ url('extrasMap') }}">Extras</a>
+                        <a class="nav-link text-black text-end" href="{{ url('establishments') }}">Establishments</a>
                     </li>
                 </ul>
             </div>
@@ -103,6 +103,15 @@
                                             }
                                         </script>
                                     </div>
+                                    <!-- <div class="col text-center mt-5 p-2">
+                                        <span data-href="importUsers" id="importUsers" class="btn btn-success btn-sm" onclick="importUsers(event.target);">Import</span>
+                                        <script>
+                                            function importUsers(_this) {
+                                                let _url = $(_this).data('href');
+                                                window.location.href = _url;
+                                            }
+                                        </script>
+                                    </div> -->
                                 </div>
                             </form>
                             <!-- Fim Search Form -->

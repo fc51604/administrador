@@ -65,7 +65,7 @@
             </div>
             <div class="row">
                 <div class="d-grid col-12 ms-auto">
-                  <a class="btn btn-primary btn-lg" id="button-view" href="{{ url('extrasMap') }}">Extras</a>
+                  <a class="btn btn-primary btn-lg" id="button-view" href="{{ url('establishments') }}">Establishments</a>
                 </div>
             </div>
           </div>

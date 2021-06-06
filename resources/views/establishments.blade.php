@@ -38,7 +38,7 @@
                         <a class="nav-link text-black text-end" href="{{ url('propriedadesFind') }}">Properties</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-black text-end" href="{{ url('extrasMap') }}">Extras</a>
+                        <a class="nav-link text-black text-end" href="{{ url('establishments') }}">Establishments</a>
                     </li>
                 </ul>
             </div>
@@ -51,20 +51,27 @@
       <div class="container profile-container" style="padding:6%!important">
         <div class="row">
             <div class="col profile-container__information">
-                <form action="" method="POST">
+                <form action="/createEstablishment" method="POST">
                     <div class="form-group row">
                         <div class="form-group col">
                             <h2 class="pt-3">Type: </h2>
                             <div class="col-sm-5 ">
-                                <input type="text" class="form-control mt-2" id="inputPassword"
-                                    name="nomeUser" style='background-color:#E7EBEE'>
+                                <select id="inputPassword" name="type">
+                                    <option value="">Choose a type</option>
+                                    <option value="Gym">Gym</option>
+                                    <option value="Supermarket">Supermarket</option>
+                                    <option value="Hospital">Hospital</option>
+                                    <option value="Restaurant">Restaurant</option>
+                                    <option value="Bus">Bus</option>
+                                    <option value="Train">Train</option>
+                                </select>
                             </div>
                         </div>
                         <div class="form-group col">
                             <h2 class="pt-3">Name: </h2>
                             <div class="col-sm-5">
                                 <input type="text" class="form-control mt-2" id="inputPassword" style='background-color:#E7EBEE'
-                                    name="primeiroNome">
+                                    name="name">
                             </div>
                         </div>
                     </div>
@@ -73,14 +80,14 @@
                             <h2 class="pt-3">Latitude: </h2>
                             <div class="col-sm-5">
                                 <input type="text" class="form-control mt-2" id="inputPassword" style='background-color:#E7EBEE'
-                                    name="primeiroNome">
+                                    name="latitude">
                             </div>
                         </div>
                         <div class="form-group col">
                             <h2 class="pt-3">Longitude: </h2>
                             <div class="col-sm-5">
                                 <input type="text" class="form-control mt-2" id="inputPassword" style='background-color:#E7EBEE'
-                                    name="primeiroNome">
+                                    name="longitude">
                             </div>
                         </div>
                     </div>
@@ -89,12 +96,12 @@
                             <h2 class="pt-3">Description: </h2>
                             <div class="col-sm-5">
                                 <input type="text" class="form-control mt-2" id="inputPassword" style='background-color:#E7EBEE'
-                                    name="primeiroNome">
+                                    name="description">
                             </div>
                         </div>
                         <div class="form-group col">
                             <div class="col-sm-5">
-                                <button type="submit" class="mt-3 btn btn-primary">Create Extra!</button>
+                                <button type="submit" class="mt-3 btn btn-primary">Create Establishment!</button>
                             </div>
                         </div>
                     </div>
