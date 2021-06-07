@@ -1,0 +1,23 @@
+IdPropriedade,IdSenhorio,TipoPropriedade,Localizacao,Latitude,Longitude,AreaMetros,Preco,Descricao,OrientacaoSolar,NumeroQuartos,Lotacao,CasasBanho,EstadoConservacao,InternetAccess,Limpeza,faixaEtariaMin,faixaEtariaMax,generoMasc,generoFemin,aceitaFumadores,aceitaAnimais
+20,1,Quarto,Lisboa,38.735408,-9.144813,15,400,"Casinha saldanha",Norte,1,1,3,Remodelado,1,1,18,40,1,1,1,1
+21,1,Casa,Lisboa,38.741304,-9.146074,30,1000,"Campo Pequeno",Oeste,2,1,1,Remodelado,1,1,18,45,1,0,1,0
+22,1,Quarto,Porto,41.158700,-8.627600,20,400,"Casa Porto",Sul,1,2,3,Remodelado,1,1,18,36,0,1,0,0
+23,1,Casa,Porto,41.162299,-8.588349,150,1500,"Casa do Dragão",Este,2,3,1,Remodelado,1,1,29,43,1,1,1,1
+24,1,Casa,Porto,41.149321,-8.672812,200,2000,"Casa na Foz",Norte,4,6,3,Novo,1,1,18,23,0,1,1,1
+25,20,Quarto,Lisboa,38.833414,-9.082097,13,240,"Casa do Jorge ",Sul,1,1,2,Novo,1,1,18,25,1,1,1,1
+26,20,Casa,Lisboa,38.868974,-9.322397,200,2000,"Casa em Sintra",Este,3,5,2,Usado,1,1,18,35,0,1,0,0
+27,20,Quarto,Lisboa,39.192853,-9.031319,15,400,"Casinha em Lamas",Norte,1,1,3,Remodelado,1,1,18,40,1,1,1,1
+28,20,Casa,Viseu,40.699166,-7.198108,30,800,"Casa em Alverca da Beira",Oeste,2,1,1,Remodelado,1,1,18,45,1,0,1,0
+29,20,Quarto,Porto,41.162059,-8.674836,20,400,"Casa do Porto Ramalde",Sul,1,2,3,Remodelado,1,1,18,36,0,1,0,0
+30,1,Casa,Porto,41.094304,-8.607544,150,1500,"Casa do Macaco",Este,2,3,1,Remodelado,1,1,29,43,1,1,0,1
+31,2,Casa,Braga,41.488160,-8.444602,200,2000,"Casa de Braga",Norte,4,6,3,Novo,1,1,18,23,0,1,1,1
+32,2,Quarto,Braga,41.462604,-8.681657,13,240,"Casa do Antonio ",Sul,1,1,2,Novo,1,1,18,25,1,1,1,1
+33,2,Casa,Braga,41.469656,-8.663493,200,2000,"Casa do Recreio",Este,3,5,2,Usado,1,1,18,35,0,0,0,0
+34,2,Quarto,Beja,37.564906,-8.423942,15,400,"Casinha dos Passaros",Norte,1,1,3,Remodelado,1,1,18,40,1,1,1,1
+35,1,Casa,Beja,38.564906,-8.423942,30,800,"Casa em Beja",Oeste,2,1,1,Remodelado,1,1,18,45,1,0,1,0
+36,20,Quarto,Algarve,37.286032,-8.653909,20,400,"Casa do meio do monte",Sul,1,2,3,Remodelado,1,1,18,36,0,1,0,0
+37,1,Casa,Algarve,37.278098,-8.607544,150,1500,"Casa do Passarinho",Este,2,3,1,Remodelado,1,1,29,40,1,1,0,1
+38,20,Casa,Setubal,38.600615,-9.159983,200,2000,"Casa de Elefante",Norte,4,6,3,Novo,1,1,18,23,0,1,1,1
+39,1,Quarto,Lisboa,38.698568,-9.305836,150,1500,"Casa do Padre",Este,2,3,1,Remodelado,1,1,29,43,1,1,0,1
+40,20,Casa,Lisboa,38.741812,-9.128471,200,2200,"Casa de Alfinete",Norte,4,6,3,Novo,1,1,18,23,1,1,1,1
+41,1,Casa,Lisboa,38.728037,-9.149802,200,200,"Casa de Budapeste",Norte,4,6,3,Novo,1,1,18,23,0,1,1,1

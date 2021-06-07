@@ -1,0 +1,10 @@
+yoIdPropriedade,IdSenhorio,TipoPropriedade,Localizacao,Latitude,Longitude,AreaMetros,Preco,Descricao,OrientacaoSolar,NumeroQuartos,Lotacao,CasasBanho,EstadoConservacao,InternetAccess,Limpeza,faixaEtariaMin,faixaEtariaMax,generoMasc,generoFemin,aceitaFumadores,aceitaAnimais
+11,1,Quarto,Lisboa,38.727618,-9.142871,100,2000,"Casa do Sporting",Sul,2,3,2,Novo,1,1,14,88,0,1,1,0
+12,1,Casa,Lisboa,38.758298,-9.140984,1005,1000,"Casa do Benfica",Este,10,5,20,Usado,1,1,28,62,0,1,1,1
+13,1,Quarto,Portugal,38.697057,-9.422295,333,3333,"Casinha bonita",Norte,3,3,3,Remodelado,1,1,18,56,1,1,1,1
+14,1,Casa,Lisboa,38.749167,-9.141928,30,1000,"Vamos a Roma",Oeste,1,1,1,Remodelado,1,1,18,88,1,0,0,0
+15,1,Quarto,Lisboa,38.768432,-9.112311,150,1000,"Casa do Gonçalo",Sul,5,4,4,Remodelado,1,1,18,36,0,1,0,0
+16,1,Quarto,Lisboa,38.737454,-9.103769,80,700,"Casa do Tiago",Este,3,2,1,Remodelado,1,1,29,43,1,1,1,1
+17,1,Quarto,Lisboa,38.726703,-9.144882,100,1,"Casa do Sporting",Norte,1,1,1,Novo,1,1,18,23,0,1,1,1
+18,1,Quarto,Porto,23.727618,-12.142871,600,1500,"Casa do Porto",Sul,3,4,2,Remodelado,1,1,14,88,0,1,1,0
+19,1,Casa,Aveiro,54.758298,-24.140984,500,1000,"Casa do Rogério",Este,5,2,20,Usado,1,1,28,62,0,1,1,1

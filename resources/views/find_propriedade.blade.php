@@ -51,7 +51,7 @@
                         <a class="nav-link text-black text-end" href="{{ url('propriedadesFind') }}">Properties</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-black text-end" href="{{ url('establishments') }}">Establishments</a>
+                        <a class="nav-link text-black text-end" href="{{ url('findEstablishment') }}">Establishments</a>
                     </li>
                 </ul>
             </div>
@@ -65,6 +65,13 @@
             <div class="row">
                 <!--good-->
                 <div class="col profile-container">
+                    <div class="breaddiv" aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                        <li class="breadcrumb-item" aria-current="page"></li>
+                        <li class="breadcrumb-item" aria-current="page"><a href="/administradorHome">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Find Property</li>
+                        </ol>
+                    </div>
                     <div class="row m-1">
                         <!-- main -->
                         <div class="col-3 pt-2">
@@ -112,17 +119,20 @@
                                     <div class="col text-center mt-5 p-2">
                                         <button type="submit" class="btn btn-primary wrn-btn table-btn">Search</button>
                                     </div>
+                                    </form>
                                     <div class="col text-center mt-5 p-2">
-                                        <span data-href="exportProperties" id="exportProperties" class="btn btn-success btn-sm" onclick="exportProperties(event.target);">Export</span>
-                                        <script>
-                                            function exportProperties(_this) {
-                                                let _url = $(_this).data('href');
-                                                window.location.href = _url;
-                                            }
-                                        </script>
+                                        <form action="{{url('/exportProperties')}}" type="get" novalidate="novalidate"  style="margin-top:-23%">
+                                            <button type="submit" class="btn btn-primary wrn-btn table-btn" style="margin-top:8%">Export Properties</button>
+                                        </form>
+                                    </div>
+                                    <div class="col text-center mt-5 p-2">
+                                        <form action="{{url('/importProperties')}}" method="POST" novalidate="novalidate" enctype="multipart/form-data" style="margin-top:-23%">
+                                            <label for="avatar">Choose a file with new properties to import:</label>
+                                            <input type="file" id="avatar" name="avatar" accept="text/csv">
+                                            <button type="submit" class="btn btn-primary wrn-btn table-btn" style="margin-top:8%">Import Properties</button>
+                                        </form>
                                     </div>
                                 </div>
-                            </form>
                             <!-- Fim Search Form -->
                         </div>
                         <div class="col-9" style="height:40rem!important">

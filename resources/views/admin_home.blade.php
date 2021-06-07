@@ -28,6 +28,12 @@
     <!-- Banner -->
     <div class="banner-image w-100 vh-100 d-flex justify-content-center align-items-center">
       <div class="container profile-container" style="padding:6%!important">
+        <div class="breaddiv" aria-label="breadcrumb">
+          <ol class="breadcrumb">
+          <li class="breadcrumb-item" aria-current="page"></li>
+          <li class="breadcrumb-item active" aria-current="page">Home</li>
+          </ol>
+        </div>
         <div class="row">
           <div class="col-2 profile-container__icon">
             <img class="m-1" src="img/profile/stormtrooper.jpg" alt="" width="100">
@@ -36,7 +42,7 @@
             <div class="row-2">
               <div class="col-2">
                 <h1 class="pt-3 profile-container__welcomeUser">Welcome,</h1>
-                <h1 class="pb-3 profile-container__nameUser" id="nameUser">admin</h1>
+                <h1 class="pb-3 profile-container__nameUser" id="nameUser">Administrador</h1>
               </div>
             </div>
             <div class="row">
@@ -65,7 +71,7 @@
             </div>
             <div class="row">
                 <div class="d-grid col-12 ms-auto">
-                  <a class="btn btn-primary btn-lg" id="button-view" href="{{ url('establishments') }}">Establishments</a>
+                  <a class="btn btn-primary btn-lg" id="button-view" href="{{ url('findEstablishment') }}">Establishments</a>
                 </div>
             </div>
           </div>

@@ -1,0 +1,2 @@
+IdUser,Username,Email,Password,PrimeiroNome,UltimoNome,Nacionalidade,Nascimento,Morada,Telefone,TipoConta,Saldo,Imagem,ApiToken,NIF
+58,Utilizador44,Utilizador44@gmail.com,passBasica,Utilizador44,Ramiro,Portugal,2000-05-11,"Rua cidade do sitio",913003389,Interessado,0,1622715780-1622160133-profileAvatar.png,f8d16f8c-80c8-459e-abc5-2086811cc255,545434858

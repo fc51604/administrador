@@ -23,7 +23,7 @@
 <body>
     <nav class="navbar fixed-top navbar-expand-lg navbar-dark p-md-3">
         <div class="container">
-            <a class="navbar-brand" href="{{ url('utilizadorHome') }}">
+            <a class="navbar-brand" href="{{ url('administradorHome') }}">
                 <img src="/img/logo/UniRent-V2.png" alt="" width="100">
             </a>
             <button class="navbar-toggler bg-dark" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -43,7 +43,7 @@
                         <a class="nav-link text-black text-end" href="{{ url('propriedadesFind') }}">Properties</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-black text-end" href="{{ url('establishments') }}">Establishments</a>
+                        <a class="nav-link text-black text-end" href="{{ url('findEstablishment') }}">Establishments</a>
                     </li>
                 </ul>
             </div>
@@ -54,6 +54,14 @@
     <!-- Profile -->
     <div class="banner-image w-100 vh-100 d-flex justify-content-center align-items-center pt-5 ">
         <div class="container profile-container">
+            <div class="breaddiv" aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                <li class="breadcrumb-item" aria-current="page"></li>
+                <li class="breadcrumb-item" aria-current="page"><a href="/administradorHome">Home</a></li>
+                <li class="breadcrumb-item" aria-current="page"><a href="/utilizadoresFind">Find User</a></li>
+                <li class="breadcrumb-item active" aria-current="page">User Profile</li>
+                </ol>
+            </div>
             <div class="row">
                 <!--<div class="col-4 profile-container__icon">
           <img class="m-3" src="img/logo/UniRent-V2.png" alt="" width="100">

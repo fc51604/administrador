@@ -1,0 +1,4 @@
+IdUser,Username,Email,Password,PrimeiroNome,UltimoNome,Nacionalidade,Nascimento,Morada,Telefone,TipoConta,Saldo,Imagem,ApiToken,NIF
+1,Gringo,francismars@gmail.com,goncalo123,Francis,Mars,Portugal,2007-11-14,"Rua de Arroios, Lisboa",917549388,Inquilino,10,1622056862-avatar.png,ed5596d8-57ec-417b-a87c-7f0ac65c3691,510411835
+2,Manuel,tobias@gmail.com,tobias123,Tiago,Silva,Portugal,2021-05-24,"Avenida do nada",910723472,Senhorio,1575,1622034181-avatar.png,9fcdc957-b2b4-4379-b3e9-3bb7a12714b2,508879116
+3,Rogério,rogerio@gmail.com,rogerio123,Tropa,Rogério,Inglaterra,2020-08-15,"Algures em Faro",931251567,Interessado,3000,fotoescaravelho.png,apitoken,524684569

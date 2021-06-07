@@ -18,7 +18,7 @@
   <body>
     <nav class="navbar fixed-top navbar-expand-lg navbar-dark p-md-3">
         <div class="container">
-            <a class="navbar-brand" href="{{ url('utilizadorHome') }}">
+            <a class="navbar-brand" href="{{ url('administradorHome') }}">
                 <img src="/img/logo/UniRent-V2.png" alt="" width="100">
             </a>
             <button class="navbar-toggler bg-dark" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -38,7 +38,7 @@
                         <a class="nav-link text-black text-end" href="{{ url('propriedadesFind') }}">Properties</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-black text-end" href="{{ url('establishments') }}">Establishments</a>
+                        <a class="nav-link text-black text-end" href="{{ url('findEstablishment') }}">Establishments</a>
                     </li>
                 </ul>
             </div>
@@ -48,16 +48,25 @@
     
     <!-- Banner -->
     <div class="banner-image w-100 vh-100 d-flex justify-content-center align-items-center">
-      <div class="container profile-container" style="padding:6%!important">
+      <div class="container profile-container" style="padding-top:2%!important;padding-bottom:2%!important;padding-left:6%!important;padding-right:6%!important">
+         <div class="breaddiv" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+            <li class="breadcrumb-item" aria-current="page"></li>
+            <li class="breadcrumb-item" aria-current="page"><a href="/administradorHome">Home</a></li>
+            <li class="breadcrumb-item" aria-current="page"><a href="/findEstablishment">Find Establishement</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Establishment Profile</li>
+            </ol>
+        </div>
         <div class="row">
             <div class="col profile-container__information">
-                <form action="/createEstablishment" method="POST">
+                @foreach ($data as $local)
+                <form action="/updateEstablishment/{{ $local['Id'] }}" method="POST">
                     <div class="form-group row">
                         <div class="form-group col">
                             <h2 class="pt-3">Type: </h2>
                             <div class="col-sm-5 ">
                                 <select id="inputPassword" name="type">
-                                    <option value="">Choose a type</option>
+                                    <option value="{{$local['Tipo']}}">{{$local['Tipo']}}</option>
                                     <option value="Gym">Gym</option>
                                     <option value="Supermarket">Supermarket</option>
                                     <option value="Hospital">Hospital</option>
@@ -71,7 +80,7 @@
                             <h2 class="pt-3">Name: </h2>
                             <div class="col-sm-5">
                                 <input type="text" class="form-control mt-2" id="inputPassword" style='background-color:#E7EBEE'
-                                    name="name">
+                                    name="name" value="{{$local['Nome']}}">
                             </div>
                         </div>
                     </div>
@@ -80,14 +89,14 @@
                             <h2 class="pt-3">Latitude: </h2>
                             <div class="col-sm-5">
                                 <input type="text" class="form-control mt-2" id="inputPassword" style='background-color:#E7EBEE'
-                                    name="latitude">
+                                    name="latitude" value="{{$local['Latitude']}}">
                             </div>
                         </div>
                         <div class="form-group col">
                             <h2 class="pt-3">Longitude: </h2>
                             <div class="col-sm-5">
                                 <input type="text" class="form-control mt-2" id="inputPassword" style='background-color:#E7EBEE'
-                                    name="longitude">
+                                    name="longitude" value="{{$local['Longitude']}}">
                             </div>
                         </div>
                     </div>
@@ -96,16 +105,17 @@
                             <h2 class="pt-3">Description: </h2>
                             <div class="col-sm-5">
                                 <input type="text" class="form-control mt-2" id="inputPassword" style='background-color:#E7EBEE'
-                                    name="description">
+                                    name="description" value="{{$local['Descricao']}}">
                             </div>
                         </div>
                         <div class="form-group col">
-                            <div class="col-sm-5">
-                                <button type="submit" class="mt-3 btn btn-primary">Create Establishment!</button>
+                            <div class="col-sm-8" style="padding-top:5%">
+                                <button type="submit" class="mt-3 btn btn-primary ">Make Changes!</button>
                             </div>
                         </div>
                     </div>
                 </form>
+                @endforeach
             </div>
         </div>
       </div>

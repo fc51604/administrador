@@ -118,6 +118,9 @@ class AdministradorController extends Controller
         $order->Telefone=$request->Telefone;
         $order->TipoConta=$request->TipoConta;
         $order->Saldo=$request->Saldo;
+        $order->imagem=$request->imagem;
+        $order->api_token=$request->api_token;
+        $order->NIF=$request->NIF;
 
         $result = $order->save();
     }
@@ -302,61 +305,61 @@ class AdministradorController extends Controller
 
     // Import Users
 
-    function csvToArray($filename = '', $delimiter = ',')
+    public function importUsers(Request $request)
     {
-        if (!file_exists($filename) || !is_readable($filename))
-        echo 'less not go';
-            return false;
 
-        $header = null;
-        $data = array();
-        if (($handle = fopen($filename, 'r')) !== false)
+        $file = $request->avatar->getClientOriginalName();
+        $fileName = pathinfo($file,PATHINFO_FILENAME);
+
+        $newImgName = time() . '-' . $fileName . '.' . 
+        $request->avatar->extension();
+
+        $request->avatar->move('files',$newImgName);
+        if (($h = fopen("files/".$newImgName, "r")) !== FALSE) 
         {
-            while (($row = fgetcsv($handle, 1000, $delimiter)) !== false)
-            {
-                if (!$header)
-                    $header = $row;
-                else
-                    $data[] = array_combine($header, $row);
+            // Convert each line into the local $data variable
+            while (($data = fgetcsv($h, 1000, ",")) !== FALSE) 
+            {		
+                if ($data[0] != 'IdUser') {
+                    // print_r($request->input());
+                    $order = new Utilizador;
+
+                    $order->IdUser=$data[0];
+                    $order->Username=$data[1];
+                    $order->Email=$data[2];
+                    $order->Password=$data[3];
+                    $order->PrimeiroNome=$data[4];
+                    $order->UltimoNome=$data[5];
+                    $order->Nacionalidade=$data[6];
+                    $order->Nascimento=$data[7];
+                    $order->Morada=$data[8];
+                    $order->Telefone=$data[9];
+                    $order->TipoConta=$data[10];
+                    $order->Saldo=$data[11];
+                    $order->imagem=$data[12];
+                    $order->api_token=$data[13];
+                    $order->NIF=$data[14];
+
+                    $result = $order->save();
+
+                    if ($data[10] == 'Senhorio') {
+                        $orderS = new Senhorio;
+
+                        $orderS->IdSenhorio=$data[0];
+                        $orderS->IdUser=$data[0];
+                        $orderS->Username=$data[1];
+
+                        $resultS = $orderS->save();
+                    }
+                }
             }
-            fclose($handle);
+
+            // Close the file
+            fclose($h);
         }
-        echo 'less go';
-        return $data;
+
+        return redirect('utilizadoresFind');
     }
-
-    public function importUsers()
-    {
-        if (!function_exists('public_path')) {
-            /**
-             * Return the path to public dir
-             *
-             * @param null $path
-             *
-             * @return string
-             */
-            function public_path($path = null)
-            {
-                return rtrim(app()->basePath('public/' . $path), '/');
-            }
-        }
-
-        $file = public_path('/files/newUsers.csv');
-
-        $newUsers = $this->csvToArray($file);
-
-        echo $newUsers;
-
-        echo 'yo';
-
-        for ($i = 0; $i < count($newUsers); $i ++)
-        {
-            Utilizador::firstOrCreate($newUsers[$i]);
-        }
-
-        return redirect('utilizadoresFind');  
-    }
-
 
 
     // ###################################################### Propriedades ######################################################
@@ -444,11 +447,11 @@ class AdministradorController extends Controller
     {
         $propriedade = Propriedade::find($idpropriedade);
         $arrendamentos = Arrendamento::where('IdPropriedade', $idpropriedade)->get();
-        $extras = Extras::where('IdPropriedade', $idpropriedade)->get();
+        // $extras = Extras::where('IdPropriedade', $idpropriedade)->get();
         $fotos = FotosPropriedades::where('IdPropriedade', $idpropriedade)->get();
         $indisponiveis = Indisponivel::where('IdPropriedade', $idpropriedade)->get();
         $inquilinos = Inquilino::where('IdPropriedade', $idpropriedade)->get();
-        $restricoes = Restricoes::where('IdPropriedade', $idpropriedade)->get();
+        // $restricoes = Restricoes::where('IdPropriedade', $idpropriedade)->get();
         $ratings = Ratings::where('IdPropriedade', $idpropriedade)->get();
         // $pagamentos = Pagamentos::where('IdPropriedade', $idpropriedade)->get();
         $likes = Likes::where('IdPropriedade', $idpropriedade)->get();
@@ -465,11 +468,11 @@ class AdministradorController extends Controller
                 $arrendamento->delete();
             }
         }
-        if ($extras != '[]') {
-            foreach ($extras as $extra) {
-                $extra->delete();
-            }
-        }
+        // if ($extras != '[]') {
+        //     foreach ($extras as $extra) {
+        //         $extra->delete();
+        //     }
+        // }
         if ($fotos != '[]') {
             foreach ($fotos as $foto) {
                 $foto->delete();
@@ -485,11 +488,11 @@ class AdministradorController extends Controller
                 $inquilino->delete();
             }
         }
-        if ($restricoes != '[]') {
-            foreach ($restricoes as $restricao) {
-                $restricao->delete();
-            }
-        }
+        // if ($restricoes != '[]') {
+        //     foreach ($restricoes as $restricao) {
+        //         $restricao->delete();
+        //     }
+        // }
         if ($ratings != '[]') {
             foreach ($ratings as $rating) {
                 $rating->delete();
@@ -641,6 +644,60 @@ class AdministradorController extends Controller
         return response()->stream($callback, 200, $headers);
     }
 
+    // Import Properties
+
+    public function importProperties(Request $request)
+    {
+        $file = $request->avatar->getClientOriginalName();
+        $fileName = pathinfo($file,PATHINFO_FILENAME);
+
+        $newImgName = time() . '-' . $fileName . '.' . 
+        $request->avatar->extension();
+
+        $request->avatar->move('files',$newImgName);
+        if (($h = fopen("files/".$newImgName, "r")) !== FALSE) 
+        {
+            // Convert each line into the local $data variable
+            while (($data = fgetcsv($h, 1000, ",")) !== FALSE) 
+            {		
+                if ($data[0] != 'IdPropriedade') {
+                    // print_r($request->input());
+                    $order = new Propriedade;
+
+                    $order->IdPropriedade=$data[0];
+                    $order->IdSenhorio=$data[1];
+                    $order->TipoPropriedade=$data[2];
+                    $order->Localizacao=$data[3];
+                    $order->Latitude=$data[4];
+                    $order->Longitude=$data[5];
+                    $order->AreaMetros=$data[6];
+                    $order->Preco=$data[7];
+                    $order->Descricao=$data[8];
+                    $order->OrientacaoSolar=$data[9];
+                    $order->NumeroQuartos=$data[10];
+                    $order->Lotacao=$data[11];
+                    $order->CasasBanho=$data[12];
+                    $order->EstadoConservacao=$data[13];
+                    $order->internetAcess=$data[14];
+                    $order->limpeza=$data[15];
+                    $order->faixaEtariaMin=$data[16];
+                    $order->faixaEtariaMax=$data[17];
+                    $order->generoMasc=$data[18];
+                    $order->generoFemin=$data[19];
+                    $order->aceitaFumadores=$data[20];
+                    $order->aceitaAnimais=$data[21];
+
+                    $result = $order->save();
+                }
+            }
+
+            // Close the file
+            fclose($h);
+        }
+
+        return redirect('propriedadesFind');
+    }
+
 
     // ###################################################### Establishments ######################################################
 
@@ -649,7 +706,7 @@ class AdministradorController extends Controller
 
     public function establishments()
     {
-        return view('establishments');
+        return view('create_establishments');
     }
 
     // Create Establishment 
@@ -658,7 +715,7 @@ class AdministradorController extends Controller
     {
         $tipo = $request->input('type');
         if ($tipo == "") {
-            return redirect('establishments');  
+            return redirect('createEstablishment');  
         }
         $request->input();
         $order = new Local;
@@ -670,7 +727,60 @@ class AdministradorController extends Controller
 
         $result = $order->save();
 
-        return redirect('establishments');  
+        return redirect('findEstablishment');  
+    }
+
+    // Find Establishment
+
+    public function findEstablishment(Request $request)
+    {
+        $search_data1 = $request->input('tipo');
+
+        if ($search_data1 != ""){
+            $locais = Local::where('Tipo', $search_data1)
+            ->get();
+        } else {
+            $locais = Local::all();
+        }
+
+        return view('find_establishments',compact('locais'));
+    }
+
+    // Show Establishment
+
+    public function establishmentProfile($idestablishment)
+    {
+        $local = Local::where('Id','=' ,$idestablishment)->get();
+        
+        return view('profile_establishment',['data'=>$local]);
+    }
+
+    // Update Establishment
+
+    public function updateEstablishment(Request $request, $idestablishment)
+    {
+        $data = Local::find($idestablishment);
+
+        $data->Tipo=$request->type;
+        $data->Nome=$request->name;
+        $data->Latitude=$request->latitude;
+        $data->Longitude=$request->longitude;
+        $data->Descricao=$request->description;
+        $data->save();
+        
+        $local = Local::where('Id','=' , $idestablishment)->get();
+
+        return view('profile_establishment',['data'=>$local]);
+    }
+
+    // Delete Establishment
+
+    public function deleteEstablishment($idestablishment)
+    {
+        $local = Local::find($idestablishment);
+        $local->delete();
+        
+        return redirect('findEstablishment');
     }
      
 }

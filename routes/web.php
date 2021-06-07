@@ -34,7 +34,7 @@ Route::get('utilizadoresFind','AdministradorController@findUtilizador');
 Route::post('utilizadoresProfile/{iduser}','AdministradorController@updateUtilizador');
 Route::post('utilizadoresDelete/{iduser}','AdministradorController@deleteUtilizador');
 Route::get('exportUsers','AdministradorController@exportUsers');
-// Route::get('importUsers','AdministradorController@importUsers');
+Route::post('importUsers','AdministradorController@importUsers');
 
 // Propriedades
 
@@ -45,8 +45,13 @@ Route::get('propriedadesFind','AdministradorController@findPropriedade');
 Route::post('propriedadesProfile/{idpropriedade}','AdministradorController@updatePropriedade');
 Route::post('propriedadesDelete/{idpropriedade}','AdministradorController@deletePropriedade');
 Route::get('exportProperties','AdministradorController@exportProperties');
+Route::post('importProperties','AdministradorController@importProperties');
 
 // Establishments
 
-Route::get('establishments','AdministradorController@establishments');
-Route::post('createEstablishment','AdministradorController@createEstablishment');
+Route::get('findEstablishment','AdministradorController@findEstablishment');
+Route::get('createEstablishment','AdministradorController@establishments');
+Route::get('establishmentProfile/{idestablishment}','AdministradorController@establishmentProfile');
+Route::post('createEstablishmentFunction','AdministradorController@createEstablishment');
+Route::post('deleteEstablishment/{idestablishment}','AdministradorController@deleteEstablishment');
+Route::post('updateEstablishment/{idestablishment}','AdministradorController@updateEstablishment');

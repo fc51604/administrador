@@ -3,7 +3,7 @@
     <html lang="en">
     <meta charset="UTF-8">
     <meta name="author" content="UniRent">
-    <title>Find User | UniRent</title>
+    <!-- <title>User | UniRent</title> -->
     <link rel="shortcut icon" type="image/jpg" href="img/logo/UniRent-V2.png" />
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -64,12 +64,12 @@
         <div class="container">
             <div class="row">
                 <!--good-->
-                <div class="col profile-container" id="el-container">
+                <div class="col profile-container">
                     <div class="breaddiv" aria-label="breadcrumb">
                         <ol class="breadcrumb">
                         <li class="breadcrumb-item" aria-current="page"></li>
                         <li class="breadcrumb-item" aria-current="page"><a href="/administradorHome">Home</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Find User</li>
+                        <li class="breadcrumb-item active" aria-current="page">Find Establishment</li>
                         </ol>
                     </div>
                     <div class="row m-1">
@@ -77,43 +77,26 @@
                         <div class="col-3 pt-2">
                             <!-- Inicio Search Form-->
                             <br>
-                            <form action="{{url('/utilizadoresFind')}}" type="get" novalidate="novalidate">
+                            <form action="{{url('/findEstablishment')}}" type="get" novalidate="novalidate">
                                 <div class="form-row">
                                     <div class="col p-2">
-                                        <input type="text" class="form-control search-slt" placeholder="Username"
-                                            name="username">
-                                        <small id="emailHelp" class="p-1 form-text text-muted">Choose the username</small>
-                                    </div>
-                                    <div class="col p-2">
-                                        <input type="text" class="form-control search-slt" placeholder="Email"
-                                            name="email">
-                                        <small id="emailHelp" class="p-1 form-text text-muted">Choose the email</small>
-                                    </div>
-                                    <div class="col p-2">
-                                        <select class="form-control search-slt" name="type" id="exampleFormControlSelect1">
-                                            <option name="type" value="Todos">Anything</option>
-                                            <option name="type" value="Senhorio">Senhorio</option>
-                                            <option name="type" value="Interessado">Interessado</option>
-                                            <option name="type" value="Inquilino">Inquilino</option>
+                                        <select class="form-control search-slt" name="tipo"
+                                            id="exampleFormControlSelect1">
+                                            <option name="query5" value="">Anything</option>
+                                            <option name="query3" value="Gym">Gym</option>
+                                            <option name="query4" value="Supermarket">Supermarket</option>
+                                            <option name="query4" value="Hospital">Hospital</option>
+                                            <option name="query4" value="Restaurant">Restaurant</option>
+                                            <option name="query4" value="Bus">Bus</option>
+                                            <option name="query4" value="Train">Train</option>
                                         </select>
-                                        <small id="emailHelp" class="p-1 form-text text-muted">Select the account type</small>
+                                        <small id="emailHelp" class="p-1 form-text text-muted">Select the establishment type</small>
                                     </div>
                                     <div class="col text-center mt-5 p-2">
                                         <button type="submit" class="btn btn-primary wrn-btn table-btn">Search</button>
                                     </div>
                                     </form>
-                                    <div class="col text-center mt-5 p-2">
-                                        <form action="{{url('/exportUsers')}}" type="get" novalidate="novalidate"  style="margin-top:-23%">
-                                            <button type="submit" class="btn btn-primary wrn-btn table-btn" style="margin-top:8%">Export Users</button>
-                                        </form>
-                                    </div>
-                                    <div class="col text-center mt-5 p-2">
-                                        <form action="{{url('/importUsers')}}" method="POST" novalidate="novalidate" enctype="multipart/form-data" style="margin-top:-23%">
-                                            <label for="avatar">Choose a file with new users to import:</label>
-                                            <input type="file" id="avatar" name="avatar" accept="text/csv">
-                                            <button type="submit" class="btn btn-primary wrn-btn table-btn" style="margin-top:8%">Import Users</button>
-                                        </form>
-                                    </div>
+                                    <a class="mt-2 btn btn-primary" id="button-view" href="{{ url('createEstablishment') }}" style="margin-top:8%!important;margin-left:18%!important">Create Establishment</a>
                                 </div>
                             <!-- Fim Search Form -->
                         </div>
@@ -125,25 +108,23 @@
                                             <div class="scroll-window" style="height:36rem!important">
                                                 <table class="table table-striped table-hover user-list fixed-header table-properties">
                                                     <thead class="table-head">
-                                                        <th class="table-head"><div>Username</div></th>
-                                                        <th class="table-head"><div>Email</div></th>
-                                                        <th class="table-head"><div>First Name</div></th>
-                                                        <th class="table-head"><div>Last Name</div></th>
-                                                        <th class="table-head"><div>Type</div></th>
+                                                        <th class="table-headP"><div>Id</div></th>
+                                                        <th class="table-headP"><div>Type</div></th>
+                                                        <th class="table-headP"><div>Name</div></th>
+                                                        <th class="table-headP"><div>Description</div></th>
                                                         <th><div></div></th>
                                                     </thead>
                                                     <tbody>
-                                                        @foreach($utilizadores as $row)
+                                                        @foreach($locais as $row)
                                                         <tr>
-                                                            <td id="table-rows">{{$row['Username']}}</td>
-                                                            <td id="table-rows">{{$row['Email']}}</td>
-                                                            <td id="table-rows">{{$row['PrimeiroNome']}}</td>
-                                                            <td id="table-rows">{{$row['UltimoNome']}}</td>
-                                                            <td id="table-rows">{{$row['TipoConta']}}</td>
+                                                            <td id="table-rows">{{$row['Id']}}</td>
+                                                            <td id="table-rows">{{$row['Tipo']}}</td>
+                                                            <td id="table-rows">{{$row['Nome']}}</td>
+                                                            <td id="table-rows">{{$row['Descricao']}}</td>
                                                             <td class="text-right buttons-properties">
-                                                                <form action="/utilizadoresDelete/{{ $row['IdUser'] }}" method="POST">
-                                                                    <a class="mt-2 btn btn-primary" id="button-view" href="{{ url('utilizadoresProfile/'.$row['IdUser']) }}" style="margin-top:8%!important;margin-left:-20%">View User</a>
-                                                                    <button type="submit" class="mt-2 btn btn-danger" id="deleteButton" style=margin-top:8%!important;float:right;>X</button>
+                                                                <form action="/deleteEstablishment/{{ $row['Id'] }}" method="POST">
+                                                                    <a class="mt-2 btn btn-primary" id="button-view" href="{{ url('establishmentProfile/'.$row['Id']) }}" style="margin-top:8%!important;margin-left:25%!important">View Establishment</a>
+                                                                    <button type="submit" class="mt-2 btn btn-danger" id="deleteButton" style="margin-top:8%!important;float:right">X</button>
                                                                 </form>			
                                                             </td>
                                                         </tr>

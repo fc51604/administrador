@@ -1,0 +1,2 @@
+IdPropriedade,IdSenhorio,TipoPropriedade,Localizacao,Latitude,Longitude,AreaMetros,Preco,Descricao,OrientacaoSolar,NumeroQuartos,Lotacao,CasasBanho,EstadoConservacao,InternetAccess,Limpeza,faixaEtariaMin,faixaEtariaMax,generoMasc,generoFemin,aceitaFumadores,aceitaAnimais
+41,1,Casa,Lisboa,38.728037,-9.149802,200,200,"Casa de Budapeste",Norte,4,6,3,Novo,1,1,18,23,0,1,1,1
