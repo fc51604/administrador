@@ -1,0 +1,4 @@
+IdPropriedade,IdSenhorio,TipoPropriedade,Localizacao,Latitude,Longitude,AreaMetros,Preco,Descricao,OrientacaoSolar,NumeroQuartos,Lotacao,CasasBanho,EstadoConservacao,InternetAccess,Limpeza,faixaEtariaMin,faixaEtariaMax,generoMasc,generoFemin,aceitaFumadores,aceitaAnimais
+24,1,Quarto,Porto,41.158700,-8.627600,20,400,"Casa Porto",Sul,1,2,3,Remodelado,1,1,18,36,0,1,0,0
+25,1,Casa,Lisboa,38.730216,-9.165699,150,1500,"Casa do Dragão",Este,2,3,1,Remodelado,1,1,29,43,1,1,1,1
+26,1,Casa,Porto,41.149321,-8.672812,200,2000,"Casa na Foz",Norte,4,6,3,Novo,1,1,18,23,0,1,1,1

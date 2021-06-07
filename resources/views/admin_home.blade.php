@@ -40,10 +40,12 @@
           </div>
           <div class="col-8">
             <div class="row-2">
+              @foreach ($data as $administrador)
               <div class="col-2">
                 <h1 class="pt-3 profile-container__welcomeUser">Welcome,</h1>
-                <h1 class="pb-3 profile-container__nameUser" id="nameUser">Administrador</h1>
+                <h1 class="pb-3 profile-container__nameUser" id="nameUser">{{ $administrador['PrimeiroNome'] }}</h1>
               </div>
+              @endforeach
             </div>
             <div class="row">
                 <div class="d-grid col-12 ms-auto">

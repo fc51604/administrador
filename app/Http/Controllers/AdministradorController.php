@@ -36,7 +36,8 @@ class AdministradorController extends Controller
 
     public function homeAdministradores()
     {
-        return view('admin_home');
+        $administrador = Administrador::all();
+        return view('admin_home',['data'=>$administrador]);
     }
 
     // Create Administrador
